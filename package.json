@@ -1,0 +1,11 @@
+{
+  "name": "crossing-guard",
+  "version": "1.0.0",
+  "description": "This is a repo that tests redirects",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "America's Test Kitchen",
+  "license": "ISC"
+}

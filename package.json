@@ -11,6 +11,7 @@
   "author": "America's Test Kitchen",
   "license": "ISC",
   "devDependencies": {
+    "dotenv": "^16.0.2",
     "eslint": "^8.23.0",
     "eslint-config-airbnb": "^19.0.4",
     "jest": "^29.0.2"

@@ -10,7 +10,23 @@ crossing-guard is a utility to assist in the testing of multiple redirects
 
 ## Running Your Tests
 
-- `npm test TESTNNAME`
+### Redirects Test
+
+- `npm test redirects`
+
+This test checks that each URL will return a 200 and redirect to the specified URL.
+
+The tests will read from the `sample_urls.csv` file inside the `/tests` folder. This CSV file has two columns, `INITIAL_URL` which is the URL the user hits before the redirect and `EXPECTED_URL` which is where the user is expected to end up after being redirected.
+
+When the tests complete, a `test-results-*.txt` file will be created that details each of the failures. All results can also be read from the terminal output.
+
+## Environment Variables
+Using environment variables will require the creation of a .env file in the root directory
+
+| Name | Explanation |
+|---|---|
+| BASIC_USERNAME | Username for basic auth on our staging sites |
+| BASIC_PASSWORD | Password for basic auth on our staging sites |
 
 ## ESLint
 As soon as your PR is submitted, Travis CI will check the test code for styling/formatting issues. Run `npx eslint tests` to check your code locally for errors.

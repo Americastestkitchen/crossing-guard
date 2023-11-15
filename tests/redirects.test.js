@@ -25,15 +25,16 @@ describe('URLs should redirect', () => {
   let i;
   // Check the status and response of each URL pair in the file
   for (i = 1; i < UrlArray.length - 1; i += 1) {
+    const testNumber = i;
     const fileURLs = UrlArray[i].split(',');
     const initialURL = fileURLs[0];
     const expectedURL = fileURLs[1];
     const testName = `"${initialURL}" should redirect to "${expectedURL}"`;
     test(testName, async () => {
       const response = await getResponse(initialURL);
-      console.log(testName);
-      if (response.status !== 200 || response.finalResponse !== expectedURL) {
-        resultData += `\n\n${testName}: \n${response.status} ${response.finalResponse === expectedURL}`;
+      console.log(`test_${testNumber} ${testName}`);
+      if ((response.status !== 200 && response.status !== 401) || response.finalResponse !== expectedURL) {
+        resultData += `\n\nTest ${testNumber}, status code ${response.status}, ${response.finalResponse === expectedURL}\nInitial:  ${initialURL}\nExpected: ${expectedURL}\nActual:   ${response.finalResponse}`;
       }
       // Jest test expects
       expect(response.status).toBe(200);

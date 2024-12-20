@@ -1,7 +1,7 @@
 const fs = require('fs');
 require('dotenv').config();
 
-let resultData = 'Redirect Test Results';
+let resultData = 'Sanity Test Results';
 
 // Return a response from the given URL
 const getResponse = async (url) => {
@@ -18,9 +18,9 @@ const getResponse = async (url) => {
   };
 };
 
-// Confirm the initial/expected URLs in the file match the actual redirect
-describe('URLs should redirect', () => {
-  const UrlFile = fs.readFileSync('tests/redirectsURLs.csv', 'utf8');
+// Confirm the URL gets a 200 success response
+describe('URLs should get a 200 success response', () => {
+  const UrlFile = fs.readFileSync('tests/sanityURLs.csv', 'utf8');
   const UrlArray = UrlFile.split('\n');
   let i;
   // Check the status and response of each URL pair in the file
@@ -28,19 +28,15 @@ describe('URLs should redirect', () => {
     const testNumber = i;
     const fileURLs = UrlArray[i].split(',');
     const initialURL = fileURLs[0];
-    const expectedURL = fileURLs[1];
-    const testName = `"${initialURL}" should redirect to "${expectedURL}"`;
+    const testName = `"${initialURL}" should report with a 200`;
     test(testName, async () => {
       const response = await getResponse(initialURL);
       console.log(`test_${testNumber} ${testName}`);
-      const isErrorCode = response.status !== 200 && response.status !== 401;
-      const isNotMatchedURL = response.finalResponse !== expectedURL;
-      if (isErrorCode || isNotMatchedURL) {
-        resultData += `\n\nTest ${testNumber}, status code ${response.status}, ${response.finalResponse === expectedURL}\nInitial:  ${initialURL}\nExpected: ${expectedURL}\nActual:   ${response.finalResponse}`;
+      if (response.status !== 200) {
+        resultData += `\n\nTest ${testNumber}, status code ${response.status}\nInitial:  ${initialURL}\nActual:   ${response.finalResponse}`;
       }
       // Jest test expects
       expect(response.status).toBe(200);
-      expect(response.finalResponse).toBe(expectedURL);
     });
   }
 });
@@ -48,7 +44,7 @@ describe('URLs should redirect', () => {
 // Compile results into a file after all tests have run
 afterAll(() => {
   const currentDate = new Date();
-  fs.appendFile(`redirects-test-result-${currentDate.getTime()}.txt`, resultData, (error) => {
+  fs.appendFile(`sanity-test-result-${currentDate.getTime()}.txt`, resultData, (error) => {
     if (error) console.warn(error);
   });
 });

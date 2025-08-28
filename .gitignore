@@ -131,4 +131,5 @@ dist
 
 .DS_Store
 
-test-result-*
+sanity-test-result-*
+redirects-test-result-*
